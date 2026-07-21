@@ -196,6 +196,49 @@
   .g-met{background:#DDF3EA;color:var(--tealDark);}
   .g-watch{background:#FDECD2;color:#B9721F;}
 
+  /* supporting artifacts: stack diagram, segmentation logic, brief, QBR */
+  .artifact-block{margin-bottom:44px;}
+  .artifact-block:last-child{margin-bottom:0;}
+  .artifact-title{font-size:16px;font-weight:700;margin:0 0 4px;}
+  .artifact-sub{font-size:12.5px;color:var(--muted);margin:0 0 14px;}
+
+  .stack-flow{display:flex;align-items:center;gap:0;flex-wrap:wrap;}
+  .stack-node{
+    background:var(--paper);border:1px solid var(--line);border-radius:8px;
+    padding:14px 16px;min-width:140px;text-align:center;margin-right:18px;position:relative;
+  }
+  .stack-node:not(:last-child)::after{
+    content:"→";position:absolute;right:-15px;top:50%;transform:translateY(-50%);
+    color:var(--muted);font-size:15px;
+  }
+  .stack-node .node-tag{font-size:9.5px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;
+    color:var(--muted);margin-bottom:4px;}
+  .stack-node h5{margin:0;font-size:13px;}
+  .stack-fan{display:flex;gap:10px;margin-left:18px;}
+  .stack-fan .stack-node{margin-right:0;min-width:110px;}
+  .stack-fan .stack-node::after{display:none;}
+
+  .seg-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;}
+  .seg-card{background:var(--paper);border:1px solid var(--line);border-radius:8px;padding:16px;}
+  .seg-card .seg-name{display:inline-block;font-size:11px;font-weight:700;padding:3px 10px;border-radius:999px;margin-bottom:10px;}
+  .seg-rule{font-size:12.5px;color:var(--ink);line-height:1.7;}
+  .seg-rule code{background:var(--panel);padding:1px 5px;border-radius:4px;font-size:11.5px;}
+
+  .brief-table{width:100%;border-collapse:collapse;background:var(--paper);border:1px solid var(--line);border-radius:8px;overflow:hidden;}
+  .brief-table tr{border-bottom:1px solid var(--line);}
+  .brief-table tr:last-child{border-bottom:none;}
+  .brief-table td{padding:11px 16px;font-size:12.5px;vertical-align:top;}
+  .brief-table td:first-child{width:150px;font-weight:700;color:var(--muted);font-size:10.5px;text-transform:uppercase;letter-spacing:.04em;}
+
+  .qbr-card{background:var(--ink);border-radius:10px;padding:20px;color:#fff;}
+  .qbr-head{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:16px;}
+  .qbr-head h5{margin:0;font-size:14px;}
+  .qbr-head span{font-size:11px;color:#C9C2D6;}
+  .qbr-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-bottom:16px;}
+  .qbr-metric .num{font-size:22px;font-weight:700;}
+  .qbr-metric .lbl{font-size:10.5px;color:#C9C2D6;margin-top:2px;}
+  .qbr-trend{background:rgba(255,255,255,0.06);border-radius:6px;padding:12px 14px;font-size:11.5px;color:#D8D2E3;line-height:1.5;}
+
   .disclaimer{
     font-size:11.5px;color:var(--muted);line-height:1.6;
     background:var(--panel);border:1px solid var(--line);border-radius:8px;
@@ -217,6 +260,7 @@
     <a href="#revops">RevOps &amp; CS Systems</a>
     <a href="#lifecycle">Lifecycle Marketing</a>
     <a href="#campaigns">Campaign Ops &amp; Analytics</a>
+    <a href="#artifacts">Supporting Artifacts</a>
     <a href="#training">Instructional Design</a>
   </div>
 </nav>
@@ -448,6 +492,94 @@
     <span>A/B and multivariate testing</span><span>Cross-platform analytics (Braze, Qlik, Tableau, Mixpanel)</span>
     <span>Performance guarantee tracking</span>
   </div>
+</section>
+
+<!-- ============ SUPPORTING ARTIFACTS ============ -->
+<section class="case" id="artifacts">
+  <div class="case-eyebrow">Supporting Artifacts</div>
+  <h2 class="case-title serif">A closer look at how the campaign program actually ran</h2>
+  <p class="lede" style="margin-bottom:36px;">A few of the underlying artifacts behind the campaign operations work: how the systems connected, how segments were actually defined, what a campaign brief looked like at intake, and how results rolled up to leadership.</p>
+
+  <div class="artifact-block">
+    <div class="artifact-title">Martech stack: how the data actually flowed</div>
+    <p class="artifact-sub">Salesforce as the system of record, Braze for execution, then reporting fanned out across three tools depending on the question being answered.</p>
+    <div class="mockup">
+      <div class="stack-flow">
+        <div class="stack-node">
+          <div class="node-tag">System of record</div>
+          <h5>Salesforce</h5>
+        </div>
+        <div class="stack-node">
+          <div class="node-tag">Execution</div>
+          <h5>Braze</h5>
+        </div>
+        <div class="stack-fan">
+          <div class="stack-node"><div class="node-tag">Cross-team rollups</div><h5>Qlik</h5></div>
+          <div class="stack-node"><div class="node-tag">Guarantee reporting</div><h5>Tableau</h5></div>
+          <div class="stack-node"><div class="node-tag">Behavior/activation</div><h5>Mixpanel</h5></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="artifact-block">
+    <div class="artifact-title">Segmentation logic: defining "activated" and "at-risk"</div>
+    <p class="artifact-sub">The rules used to route users into the activated-user campaign versus a retention-focused touch.</p>
+    <div class="mockup">
+      <div class="seg-grid">
+        <div class="seg-card">
+          <span class="seg-name" style="background:#DDF3EA;color:var(--tealDark);">Activated</span>
+          <div class="seg-rule">
+            Engagement score at or above <code>70</code><br>
+            AND logged in within the last <code>14 days</code>
+          </div>
+        </div>
+        <div class="seg-card">
+          <span class="seg-name" style="background:#FBE0D6;color:var(--coral);">At-risk</span>
+          <div class="seg-rule">
+            Days since last login greater than <code>30</code><br>
+            OR engagement score down <code>20%+</code> over the trailing 30 days
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="artifact-block">
+    <div class="artifact-title">Sample campaign brief</div>
+    <p class="artifact-sub">The intake format used to scope a campaign before it went to design or entered Braze.</p>
+    <div class="mockup">
+      <table class="brief-table">
+        <tr><td>Campaign</td><td>Activated user campaign, Q3</td></tr>
+        <tr><td>Audience</td><td>Users meeting the "activated" segment definition, excluding anyone touched in the last 14 days</td></tr>
+        <tr><td>Goal</td><td>Deepen product adoption among already-engaged users to support retention and guarantee targets</td></tr>
+        <tr><td>Channels</td><td>Email primary, in-app banner secondary</td></tr>
+        <tr><td>Timeline</td><td>Brief to design: 2 weeks before send. Send window: first full week of the month</td></tr>
+        <tr><td>Success metric</td><td>Engagement rate improvement tracked in Braze, validated against Mixpanel activation events</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="artifact-block">
+    <div class="artifact-title">Reporting excerpt: monthly and quarterly rollups to leadership</div>
+    <p class="artifact-sub">Monthly check-ins tracked pace; the quarterly rollup is what leadership actually saw against guarantees.</p>
+    <div class="mockup">
+      <div class="qbr-card">
+        <div class="qbr-head">
+          <h5>Q3 Campaign Performance</h5>
+          <span>Presented quarterly, tracked monthly</span>
+        </div>
+        <div class="qbr-metrics">
+          <div class="qbr-metric"><div class="num">62%</div><div class="lbl">Avg. email engagement</div></div>
+          <div class="qbr-metric"><div class="num">18%</div><div class="lbl">Conversion vs. guarantee</div></div>
+          <div class="qbr-metric"><div class="num">50+</div><div class="lbl">Campaigns delivered</div></div>
+        </div>
+        <div class="qbr-trend">Trend note: engagement held steady month over month after the send-time test landed in July, with the tiered-incentive offer test contributing most of the quarter's lift in conversion.</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="disclaimer">Illustrative reconstruction: these artifacts represent the format and structure of real intake, segmentation, and reporting practices, not actual company data.</div>
 </section>
 
 <!-- ============ CASE 4: INSTRUCTIONAL DESIGN ============ -->
